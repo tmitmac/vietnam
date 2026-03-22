@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vietnam & Cambodia Countdown</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  background: linear-gradient(135deg, #020617, #0f172a);
+}
+.bar {
+  transition: width 1s ease-in-out;
+}
+</style>
+</head>
+
+<body class="text-white font-sans min-h-screen flex items-center justify-center">
+
+<div class="w-full max-w-3xl p-6 space-y-8">
+
+
+
+  <!-- Title -->
+  <div class="text-center space-y-2">
+    <h1 class="text-4xl font-bold">Vietnam & Cambodia 🇻🇳🇰🇭</h1>
+    <p class="opacity-70">Your trip countdown</p>
+  </div>
+
+  <!-- Countdown -->
+  <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-center shadow-lg">
+    <p id="bigCountdown" class="text-4xl font-bold tracking-wide"></p>
+    <p id="percentText" class="text-sm opacity-70 mt-2"></p>
+
+    <!-- Progress Bar -->
+    <div class="w-full bg-white/20 rounded-full h-6 mt-6 overflow-hidden">
+      <div id="bar" class="bar bg-green-400 h-6 rounded-full w-0"></div>
+    </div>
+  </div>
+
+  <!-- Extra Info -->
+  <div class="grid grid-cols-2 gap-4 text-center">
+    <div class="bg-white/10 p-4 rounded-xl">
+      <p class="text-sm opacity-70">Start Date</p>
+      <p class="font-semibold">Nov 1, 2024</p>
+    </div>
+
+    <div class="bg-white/10 p-4 rounded-xl">
+      <p class="text-sm opacity-70">Departure</p>
+      <p class="font-semibold">Mar 31, 2026</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const start = new Date("November 1, 2024 00:00:00");
+const end = new Date("March 30, 2026 17:45:00");
+
+function update() {
+  const now = new Date();
+
+  const total = end - start;
+  const elapsed = now - start;
+  const remaining = end - now;
+
+  const countdownEl = document.getElementById("bigCountdown");
+  const percentEl = document.getElementById("percentText");
+  const bar = document.getElementById("bar");
+
+  if (remaining <= 0) {
+    countdownEl.innerText = "🎉 You're on your trip!";
+    percentEl.innerText = "100% complete";
+    bar.style.width = "100%";
+    return;
+  }
+
+  const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+  const seconds = Math.floor((remaining / 1000) % 60);
+
+  countdownEl.innerText = 
+    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+  let progress = (elapsed / total) * 100;
+  progress = Math.max(0, Math.min(100, progress));
+
+  bar.style.width = progress + "%";
+  percentEl.innerText = progress.toFixed(2) + "% of the wait completed";
+}
+
+update();
+setInterval(update, 1000); // update every second
+</script>
+
+</body>
+</html>
